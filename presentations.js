@@ -10,6 +10,10 @@ let responseUser = readline.createInterface({
     output: process.stdout
 });
 
+//Faire appel au service
+
+let service = require('./service');
+
 //fonction start()
 
 function saisie() {
@@ -26,8 +30,10 @@ function saisie() {
 
 function afficherMenu() {
 
-    console.log("1.  Lister les clients");
-    console.log("2. Ajouter nouveau client");
+    console.log("  1.  Lister les clients ");
+    console.log("  2.  Ajouter nouveau client ");
+    console.log("  3.  Rechercher un client par nom ");
+    console.log("  4.  Verifier la disponibilité d'une chambre ");
     console.log("99. Sortir");
 }
 
@@ -39,18 +45,28 @@ function traiterSaisie(reponse) {
         case '99':
             console.log("Au revoir");
             responseUser.close();
+            console.log("");
             return;
 
         case '1':
             console.log("Liste des clients");
+            service.listeClients();
+            console.log("");
+
             break;
 
         case '2':
             console.log("Ajout nouveau client");
+            console.log("");
+
+
             break;
 
         default:
             console.log("Pas de choix possible");
+            console.log("");
+
+
 
     }
     afficherMenu();

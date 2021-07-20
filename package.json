@@ -16,5 +16,8 @@
     "bugs": {
         "url": "https://github.com/adjanorpro18/hotel-app-console/issues"
     },
-    "homepage": "https://github.com/adjanorpro18/hotel-app-console#readme"
+    "homepage": "https://github.com/adjanorpro18/hotel-app-console#readme",
+    "dependencies": {
+        "request": "^2.88.2"
+    }
 }

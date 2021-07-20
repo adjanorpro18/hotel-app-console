@@ -1,0 +1,1 @@
+console.log(" Administration de l'Hotel ")

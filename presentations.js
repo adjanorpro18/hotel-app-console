@@ -57,6 +57,9 @@ function traiterSaisie(reponse) {
 
         case '2':
             console.log("Ajout nouveau client");
+            responseUser.question('Veuillez saisir un nouveau client? :', function(saisie) {
+                service.ajouterClient(saisie);
+            });
             console.log("");
 
 

@@ -1,6 +1,7 @@
 const clients = require('./client.json');
 
 
+
 //fonction qui retourne la liste 
 function listeClients() {
 
@@ -11,3 +12,26 @@ function listeClients() {
 }
 
 exports.listeClients = listeClients;
+
+//fonction qui rajoute un nouveau client
+
+function ajouterClient(saisie) {
+
+    let clientTab = saisie.split(' ');
+    console.log(clientTab);
+
+    //creation de la variable client
+
+    let client = {
+        "id": clients.length + 1,
+        "nom": clientTab[0],
+        "prenom": clientTab[1]
+    }
+
+    //ajouter le nouveau client crée
+
+    clients.push(client);
+    listeClients(); //afficher par la suite la liste de clients avec le nouveau client ajouté 
+}
+
+exports.ajouterClient = ajouterClient;

@@ -18,8 +18,6 @@ exports.listeClients = listeClients;
 function ajouterClient(saisie) {
 
     let clientTab = saisie.split(' ');
-    console.log(clientTab);
-
     //creation de la variable client
 
     let client = {

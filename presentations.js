@@ -14,13 +14,20 @@ let responseUser = readline.createInterface({
 
 let service = require('./service');
 
+//Faire appel au servicePromesse
+
+let servicePromesse = require('./promesses'); // charger le module promesses.js sans oublier de ne pas faire les exports
+
 //fonction start()
 
-function saisie() {
+function start() {
 
-    responseUser.question('Quel est votre choix ? : ', function(saisie) {
-
-        traiterSaisie(saisie);
+    responseUser.question('Choix du menu: ', function(saisie) {
+        //Deuxième parametre avec un arrow fonction qui sera exécuté à chaque fois mais au bon moment
+        traiterSaisie(saisie, () => {
+            afficherMenu();
+            start();
+        })
     });
 }
 
@@ -30,52 +37,64 @@ function saisie() {
 
 function afficherMenu() {
 
-    console.log("  1.  Lister les clients ");
-    console.log("  2.  Ajouter nouveau client ");
-    console.log("  3.  Rechercher un client par nom ");
-    console.log("  4.  Verifier la disponibilité d'une chambre ");
-    console.log("99. Sortir");
+    console.log("  1.  Lister les clients ");
+    console.log("  2.  Ajouter nouveau client ");
+    console.log("  3.  Rechercher un client par nom ");
+    console.log("  4.  Verifier la disponibilité d'une chambre ");
+    console.log(" 99.  Sortir");
 }
 
+/**
+ * fonction traiterSaisie()
+ * @param {*} reponse 
+ * @param {*} execute mon callback ()=>{ affichMenu(); start();}
+ * @returns 
+ */
 
-//fonction traiterSaisie()
-
-function traiterSaisie(reponse) {
+function traiterSaisie(reponse, execute) {
     switch (reponse) {
         case '99':
             console.log("Au revoir");
             responseUser.close();
-            console.log("");
             return;
 
         case '1':
             console.log("Liste des clients");
-            service.listeClients();
-            console.log("");
+            //service.listeClients();
 
+            let oPromesse = new servicePromesse.ServicePromesse(); //on recupere l'objet servicePromesse par un new 
+            oPromesse.listeClients()
+                .then(response => {
+                    console.log(response);
+                }).catch(err => {
+                    console.log(err);
+                }).finally(() => {
+                    execute();
+                })
             break;
 
         case '2':
             console.log("Ajout nouveau client");
             responseUser.question('Veuillez saisir un nouveau client? :', function(saisie) {
                 service.ajouterClient(saisie);
+                console.log(`case 2 après appel service.ajouterClient(${saisie})`);
+                execute();
+
             });
-            console.log("");
-
-
             break;
 
         default:
             console.log("Pas de choix possible");
-            console.log("");
+            execute();
+            break;
 
 
 
     }
     afficherMenu();
-    saisie();
+    start();
 
 }
 
 exports.afficherMenu = afficherMenu;
-exports.saisie = saisie;
+exports.start = start;
